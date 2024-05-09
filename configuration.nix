@@ -34,6 +34,11 @@
         efiSysMountPoint = "/boot";
       };
     };
+
+    # Modifications for a completely silent boot
+    initrd.verbose = false;
+    consoleLogLevel = 0;
+    kernelParams = [ "quiet" "udev.log_level=3" ];
   };
 
   # Enabling SOUND

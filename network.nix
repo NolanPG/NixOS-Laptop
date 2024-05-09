@@ -58,6 +58,7 @@
   };
 
   # Creating a WiFi HotSpot that launches on startup, note that doesn't appear in Plasma System Tray Network utility
+  networking.interfaces.wlan0.useDHCP = true; # DHCP is needed for wlan0 to be visible in other devices
   services.create_ap = {
     enable = true;
     settings = {
