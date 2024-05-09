@@ -1,12 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
+{ 
+  config, 
+  lib, 
+  pkgs, 
+  ... 
+}:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
       ./gaming.nix
       ./network.nix
@@ -14,13 +15,14 @@
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    # Setting latest stable Linux Kernel from kernel.org
+    # Setting latest stable Linux Kernel from nixpkgs
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # ENABLING NTFS (FOR KDE PARTITION MANAGER)
+    # Enabling ntfs support
     supportedFilesystems = [ "ntfs" ];
 
     loader = {
+      # Using grub as bootloader
       grub = {
         enable =true;
         devices = [ "nodev" ];
@@ -33,10 +35,6 @@
       };
     };
   };
-  # networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Enabling SOUND
   sound.enable = true;
@@ -47,22 +45,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
+    # Uncomment this to use JACK applications
+    # jack.enable = true;
   };
 
   # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
+  # Select internationalization properties.
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "es_ES.UTF-8";
     LC_IDENTIFICATION = "es_ES.UTF-8";
@@ -74,23 +64,27 @@
     LC_TELEPHONE = "es_ES.UTF-8";
     LC_TIME = "es_ES.UTF-8";
   };
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+
+  # Plasma 6 as the DE, for the time being it is only available in NixOS Unstable
+  services.desktopManager.plasma6.enable = true;
+
+  # Enabling Xorg even though I use Wayland because some Xorg apps had troubles with XWayland support (Not sure about that)
   services.xserver.enable = true;
   programs.xwayland.enable = true;
+
+  # Plasma Wayland as default
   services.displayManager.defaultSession = "plasma";
+
+  # Enabling dconf as a dependency of Firefox for it to being ablo of getting magnets' mime type and launch Deluge as a torrent client properly
   programs.dconf.enable = true;
 
+  # Setting sddm as the display manager
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
   };
 
-  services.desktopManager.plasma6.enable = true;
-
+  # Enabling XDG Portal to make GTK apps use the QT Portal when opening files or folders
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -101,7 +95,7 @@
     # gtkUsePortal = true;
   };
 
-  #ENABLING FLAKES
+  # Enabling Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
@@ -109,8 +103,9 @@
 
     # Packages normally included in other distros by default
     lshw 
+    wget
 
-    qdirstat
+    qdirstat # App for managing disk space usage
 
     kdePackages.appstream-qt # libsForQt5 is replaced by kdePackages to keep coherence for Plasma 6 naming
 
@@ -127,7 +122,8 @@
     # Firefox dependencies
     ffmpeg_7-full
     mailcap # Helper application and MIME type associations for file types
- 
+
+    # Overriding vscode with vscodium package to manage its extensions declaratively
     (vscode-with-extensions.override {
       vscode = vscodium;
       vscodeExtensions = with vscode-extensions; [
@@ -150,11 +146,14 @@
   ];
 
   environment.variables = {
-    # Force GTK apps to use Dolphin for opening folders (same as gtkUseePortal = true; but for some reason that's deprecated)
+    # Force GTK apps to use QT Portal for opening folders or files (same as gtkUsePortal = true; but that's deprecated)
     GTK_USE_PORTAL = "1";
   };
 
-  # Configure flatpaks
+  # Enabling flatpak support, still have to run:
+  # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  # For adding flathub to flatpak
+  # TODO there's a project https://github.com/gmodena/nix-flatpak that helps with making flatpak management declaratively I'll look into that
   services.flatpak.enable = true;
 
   # Allow unfree packages
@@ -166,8 +165,8 @@
   # Setting up fonts
   fonts = {
     packages = with pkgs; [
-      ibm-plex
-      meslo-lgs-nf
+      ibm-plex # GUI font
+      meslo-lgs-nf # Konsole font
     ];
 
     fontconfig.defaultFonts = {
@@ -178,7 +177,7 @@
   };
 
   programs = {
-      partition-manager.enable = true;
+      partition-manager.enable = true; # KDE Partition Manager
 
       # Setting up oh-my-zsh
       zsh = {
@@ -188,6 +187,7 @@
         autosuggestions.enable = true;
         syntaxHighlighting.enable = true;
 
+        # Setting PowerLevel10k as the zsh theme
         promptInit = "source ''${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
 
         ohMyZsh = {
@@ -211,64 +211,21 @@
 
   nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
 
-  # ALIASES
+  # Aliases
   environment.shellAliases = {
     ll = "ls -l";
     ls = "ls --color=tty";
-    nix-search = "nix --extra-experimental-features \"nix-command flakes\" search nixpkgs";
+    nix-find = "nix --extra-experimental-features \"nix-command flakes\" search nixpkgs";
     neofetch = "fastfetch";
     nixos-config = "codium /home/nolan/.dotfiles";
+
+    # nixos-switch rebuilds NixOS using system-wide configuration, then rebuilds home using home.nix and finally it refreshes KDE app cache (icons in app launcher)
     nixos-switch = "sudo nixos-rebuild switch --flake /home/nolan/.dotfiles && home-manager switch --flake /home/nolan/.dotfiles && kbuildsycoca5";
   };
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nolan.isNormalUser = true;
   users.users.nolan.extraGroups = [ "networkmanager" "wheel" "docker" ];
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older ` NixOS versions.

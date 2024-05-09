@@ -1,15 +1,18 @@
-{ config, libs, pkgs, ... }:
+{ 
+  config, 
+  libs, 
+  pkgs, 
+  ... 
+}:
 
 {
   # Enabling Wi-Fi
   networking = {
     hostName = "nixos";
-    networkmanager.enable = true;
-    interfaces.wlan0.useDHCP = true;
-    # networkmanager.dhcp = "dhcpcd";
+    # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
     wireless.dbusControlled = true;
     wireless.allowAuxiliaryImperativeNetworks = true;
-    # useDHCP = false;
 
     firewall = {
       allowedTCPPorts = [ 80 443 8080 8081 8000 8001 3000 6600 7201 ];
@@ -18,7 +21,10 @@
       allowedUDPPortRanges = [{ from = 1714; to = 1764; }];
     };
 
-    hosts = { "127.0.0.1" = [ "work" "www" "spa-test" ]; };
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
 
     # # Set up Wireguard as a proxy
     # wireguard = { 
@@ -51,6 +57,7 @@
     # };
   };
 
+  # Creating a WiFi HotSpot that launches on startup, note that doesn't appear in Plasma System Tray Network utility
   services.create_ap = {
     enable = true;
     settings = {
@@ -61,6 +68,7 @@
     };
   };
 
+  # Enabling SSH
   services.openssh = {
     enable = true;
 
