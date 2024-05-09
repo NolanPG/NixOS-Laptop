@@ -72,6 +72,9 @@
   services.xserver.enable = true;
   programs.xwayland.enable = true;
 
+  # Stating system's gpu driver, not needed in some cases
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   # Plasma Wayland as default
   services.displayManager.defaultSession = "plasma";
 
