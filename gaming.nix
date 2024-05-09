@@ -15,6 +15,8 @@
     osu-lazer-bin
     protonup-qt
     wineWowPackages.waylandFull
+    obs-studio
+    kdePackages.kdenlive
   ];
 
 
