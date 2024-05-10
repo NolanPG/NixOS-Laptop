@@ -24,7 +24,7 @@
     loader = {
       # Using grub as bootloader
       grub = {
-        enable =true;
+        enable = true;
         devices = [ "nodev" ];
         efiSupport = true;
       };
