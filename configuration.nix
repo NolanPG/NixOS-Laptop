@@ -226,10 +226,10 @@
     ls = "ls --color=tty";
     nix-find = "nix --extra-experimental-features \"nix-command flakes\" search nixpkgs";
     neofetch = "fastfetch";
-    nixos-config = "codium /home/nolan/.dotfiles";
+    config-nixos = "codium /home/nolan/.dotfiles";
 
-    # nixos-switch rebuilds NixOS using system-wide configuration, then rebuilds home using home.nix and finally it refreshes KDE app cache (icons in app launcher)
-    nixos-switch = "sudo nixos-rebuild switch --flake /home/nolan/.dotfiles && home-manager switch --flake /home/nolan/.dotfiles && kbuildsycoca5";
+    # switch-nixos rebuilds NixOS using system-wide configuration, then rebuilds home using home.nix and finally it refreshes KDE app cache (icons in app launcher)
+    switch-nixos = "sudo nixos-rebuild switch --flake /home/nolan/.dotfiles && home-manager switch --flake /home/nolan/.dotfiles && kbuildsycoca5";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
