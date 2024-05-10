@@ -145,6 +145,7 @@
         #CPP
         ms-vscode.cpptools
         adpyke.codesnap
+        oderwat.indent-rainbow
 
         #RUST
         rust-lang.rust-analyzer

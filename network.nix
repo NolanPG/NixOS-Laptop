@@ -75,4 +75,11 @@
 
     settings.PasswordAuthentication = true;
   };
+
+  # Enabling xRDP for session sharing
+  services.xrdp = {
+    enable = true;
+    # defaultWindowManager = "${pkgs.xfce.xfdesktop}";
+    openFirewall = true;
+  };
 }

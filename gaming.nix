@@ -19,6 +19,9 @@
     kdePackages.kdenlive
   ];
 
+  # RGB Configuration
+  services.hardware.openrgb.enable = true;
+  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
   hardware = {
     steam-hardware.enable = true;
