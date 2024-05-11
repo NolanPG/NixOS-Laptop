@@ -1,4 +1,4 @@
-{config, ...}:
+{config, lib, pkgs, ...}:
 
 {
   powerManagement = {
@@ -9,10 +9,17 @@
 
   services = {
     thermald.enable = true;
-    power-profiles.daemon.enable = true;
+
+    system76-scheduler = {
+      enable = true;
+      useStockConfig = true;
+    };
+
+    power-profiles-daemon.enable = true;
     auto-cpufreq = {
       enable = true;
       settings = {
+
         battery = {
           governor = "powersave";
           turbo = "never";
@@ -23,11 +30,8 @@
           turbo = "auto";
         };
       };
-
-      system76-scheduler = {
-        enable = true;
-        useStockConfig = true;
-      };
     };
   };
+
+  environment.systemPackages = [ pkgs.kdePackages.drkonqi ];
 }
