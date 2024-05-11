@@ -9,19 +9,11 @@
     environment.systemPackages = with pkgs; [
     bottles # Wine manager
     ryujinx # Nintendo Switch emulator
-    sunshine # Remote gaming solution for streaming games over the internet
-    goverlay
-    mangohud # Performance monitoring tool for Vulkan and OpenGL games
-    osu-lazer-bin
     protonup-qt
     wineWowPackages.waylandFull
     obs-studio
     kdePackages.kdenlive
   ];
-
-  # RGB Configuration
-  services.hardware.openrgb.enable = true;
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" ];
 
   hardware = {
     steam-hardware.enable = true;

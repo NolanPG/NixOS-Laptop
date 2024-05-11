@@ -9,9 +9,19 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./battery-life.nix
       ./gaming.nix
-      ./network.nix
     ];
+
+  # Enabling network
+  networking = {
+    networkmanager.enable = true;
+    wireless.dbusControlled = true;
+    wireless.allowAuxiliaryImperativeNetworks = true;
+  };
+
+  # Enabling touchpad support
+  services.libinput.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -109,10 +119,12 @@
 
   environment.systemPackages = with pkgs; [
     libsForQt5.kservice # kbuildsycoca5
+    kdePackages.sddm-kcm # sddm settings module
 
     # Packages normally included in other distros by default
     lshw 
     wget
+    fastfetch
 
     qdirstat # App for managing disk space usage
 
@@ -178,7 +190,7 @@
       ibm-plex # GUI font
       meslo-lgs-nf # Konsole font
     ];
-
+    fontconfig.subpixel.rgba = "bgr";
     fontconfig.defaultFonts = {
       serif = [ "IBM Plex Sans" ];
       sansSerif = [ "IBM Plex Sans" ];
