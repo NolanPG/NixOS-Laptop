@@ -120,6 +120,7 @@
   environment.systemPackages = with pkgs; [
     libsForQt5.kservice # kbuildsycoca5
     kdePackages.sddm-kcm # sddm settings module
+    libreoffice-qt-fresh
 
     # Packages normally included in other distros by default
     lshw 
