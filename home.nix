@@ -25,7 +25,6 @@
 
     zsh-powerlevel10k
     telegram-desktop
-    fastfetch
     deluge
     protonvpn-gui
     celluloid
