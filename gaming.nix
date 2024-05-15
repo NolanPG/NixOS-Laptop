@@ -8,7 +8,6 @@
 {
     environment.systemPackages = with pkgs; [
     bottles # Wine manager
-    ryujinx # Nintendo Switch emulator
     protonup-qt
     wineWowPackages.waylandFull
     obs-studio
