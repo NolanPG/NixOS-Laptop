@@ -6,6 +6,9 @@
 }:
 
 {
+  # Enabling Bluetooth
+  hardware.bluetooth.enable = true;
+
   # Enabling Wi-Fi
   networking = {
     hostName = "nixos";
