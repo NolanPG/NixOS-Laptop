@@ -141,6 +141,13 @@
     zlib
     unzip
 
+    # System Settings info panel dependencies
+    wayland-utils
+    vulkan-tools
+    glxinfo
+    virtualgl
+    clinfo
+
     # Firefox dependencies
     ffmpeg_7-full
     mailcap # Helper application and MIME type associations for file types
