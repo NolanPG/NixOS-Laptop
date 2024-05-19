@@ -27,7 +27,7 @@
     telegram-desktop
     deluge
     protonvpn-gui
-    celluloid
+    haruna
     qalculate-qt
     neovim
     btop
