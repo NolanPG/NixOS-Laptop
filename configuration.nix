@@ -20,6 +20,9 @@
     wireless.allowAuxiliaryImperativeNetworks = true;
   };
 
+  # Enabling Bluetooth
+  hardware.bluetooth.enable = true;
+  
   # Enabling touchpad support
   services.libinput.enable = true;
 
