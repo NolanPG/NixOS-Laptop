@@ -131,6 +131,8 @@
     # Packages normally included in other distros by default
     lshw 
     wget
+    git
+    gh
     fastfetch
 
     qdirstat # App for managing disk space usage

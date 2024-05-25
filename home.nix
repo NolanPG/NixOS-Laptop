@@ -31,8 +31,6 @@
     qalculate-qt
     neovim
     btop
-    git
-    gh # GitHub CLI Tool
     python3
 
 
@@ -58,8 +56,9 @@
     enable = true;
     font.name = "MesloGS NF";
     font.package = pkgs.meslo-lgs-nf;
-    font.size = "11";
+    font.size = 11;
     theme = "Dracula";
+    extraConfig = "background_opacity .7";
     shellIntegration.enableZshIntegration = true;
   };
 
