@@ -120,6 +120,9 @@
   # Enabling Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Setting ZSH as the default shell for all users
+  users.defaultUserShell = pkgs.zsh;
+
   environment.systemPackages = with pkgs; [
     libsForQt5.kservice # kbuildsycoca5
     kdePackages.sddm-kcm # sddm settings module
