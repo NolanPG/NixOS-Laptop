@@ -51,8 +51,17 @@
     # # environment:
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
-    # '')
+    # '')s
   ];
+
+  programs.kitty = {
+    enable = true;
+    font.name = "MesloGS NF";
+    font.package = pkgs.meslo-lgs-nf;
+    font.size = "11";
+    theme = "Dracula";
+    shellIntegration.enableZshIntegration = true;
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
