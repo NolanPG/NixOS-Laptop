@@ -58,10 +58,23 @@
     font.package = pkgs.meslo-lgs-nf;
     font.size = 11;
     theme = "Dracula";
-    extraConfig = "background_opacity .7";
+    extraConfig = "
+      background_opacity .7
+      confirm_os_window_close 0
+    ";
     shellIntegration.enableZshIntegration = true;
   };
 
+  xdg.desktopEntries = {
+    kitty = {
+      name = "kitto";
+      exec = "kitty";
+      icon = "${pkgs.fetchurl {
+        url = "https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/blob/master/Papirus/16x16/apps/konsole.svg";
+        sha256 = "sha256-0Fw4GOziUB4g5QLeI3UYPMRD4Y+Tiow4tUoGNbX7wME=";
+      }}";
+    };
+  };
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
