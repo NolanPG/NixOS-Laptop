@@ -128,6 +128,8 @@
     kdePackages.sddm-kcm # sddm settings module
     libreoffice-qt-fresh
 
+    distrobox
+
     # Packages normally included in other distros by default
     lshw 
     wget
@@ -140,6 +142,8 @@
     kdePackages.appstream-qt # libsForQt5 is replaced by kdePackages to keep coherence for Plasma 6 naming
 
     # peazip # Free Zip / Unzip software and Rar file extractor. Cross-platform file and archive manager.
+
+    direnv # program recommended for nix
 
     # Ark Extraction dependencies
     libarchive
@@ -264,6 +268,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nolan.isNormalUser = true;
   users.users.nolan.extraGroups = [ "networkmanager" "wheel" "docker" ];
+  nix.settings.trusted-users = [ "root" "nolan" ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older ` NixOS versions.
